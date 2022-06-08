@@ -1,0 +1,24 @@
+<div class="game">
+  <div class="game-board">
+    <app-board
+      [squares]="history[stepNumber].squares"
+      (onClick)="handleClick($event)"
+    ></app-board>
+  </div>
+  <div class="game-info">
+    <ng-template
+      #t [ngTemplateOutlet]="t"
+      let-winner [ngTemplateOutletContext]="{ $implicit: getWinner() }"
+    >
+      <div>
+        <span *ngIf="winner; else elseBlock">Winner: {{winner}}</span>
+        <ng-template #elseBlock>Next player: {{xIsNext ? 'X' : 'O'}}</ng-template>
+      </div>
+    </ng-template>
+    <ol>
+      <li *ngFor="let step of history; index as move;">
+        <button (click)="jumpTo(move)">{{move ? 'Go to move #' + move : 'Go to game start'}}</button>
+      </li>
+    </ol>
+  </div>
+</div>
